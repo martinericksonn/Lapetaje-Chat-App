@@ -1,4 +1,5 @@
-import 'package:chat_app/src/screens/authentication/auth_screen.dart';
+import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
+import 'package:chat_app/src/theme.dart';
 import 'package:flutter/material.dart';
 
 import '../service_locators.dart';
@@ -15,12 +16,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
+      theme: appTheme(),
+      darkTheme: appTheme(),
       builder: (context, Widget? child) => child as Widget,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: NavigationService.generateRoute,
-      initialRoute: AuthScreen.route,
+      initialRoute: LoginScreen.route,
     );
   }
 }
