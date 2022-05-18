@@ -136,6 +136,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Future<void> register() async {
+    try {
+      await _auth.register(
+          email: _emailCon.text.trim(), password: _passCon.text.trim());
+    } catch (error) {
+      prompts = error.toString();
+    }
+  }
+
   TextButton registerButton(BuildContext context) {
     return TextButton(
       onPressed: () {
@@ -145,13 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // print(_formKey.currentState!.validate() && isFieldEmpty());
         if (_formKey.currentState!.validate() && isFieldEmpty()) {
           setState(() {
-            // String result =
-            _auth.register(
-                email: _emailCon.text.trim(), password: _passCon.text.trim());
-            // isRegisterSuccess =
-            //     (result.contains("Successfully")) ? true : false;
-
-            // prompts = result;
+            register();
           });
         } else {
           setState(() {

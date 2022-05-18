@@ -76,7 +76,11 @@ class AuthController with ChangeNotifier {
 
   Future<UserCredential?> register(
       {required String email, required String password}) async {
-    return await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+    try {
+      return await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      rethrow;
+    }
   }
 }
