@@ -139,9 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> register() async {
     try {
       await _auth.register(
-          username: _unCon.text.trim(),
-          email: _emailCon.text.trim(),
-          password: _passCon.text.trim());
+          email: _emailCon.text.trim(), password: _passCon.text.trim());
     } catch (error) {
       prompts = error.toString();
     }
