@@ -1,13 +1,14 @@
 import 'dart:async';
 
-import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
+import 'package:chat_app/src/controllers/navigation/navigation_service.dart';
+import 'package:chat_app/src/models/chat_user_model.dart';
+
+import 'package:chat_app/src/screens/home/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../service_locators.dart';
-
-import '../screens/home/home_screen.dart';
-import 'navigation/navigation_service.dart';
 
 class AuthController with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -16,10 +17,13 @@ class AuthController with ChangeNotifier {
   FirebaseAuthException? error;
   bool working = true;
   final NavigationService nav = locator<NavigationService>();
+
+  ///initializes the stream on creation
   AuthController() {
     authStream = _auth.authStateChanges().listen(handleAuthUserChanges);
   }
 
+  ///makes sure to dispose of the stream when not in use
   @override
   dispose() {
     authStream.cancel();
@@ -31,7 +35,7 @@ class AuthController with ChangeNotifier {
     if (event == null) {
       print('no logged in user');
       nav.popUntilFirst();
-      nav.pushReplacementNamed(LoginScreen.route);
+      nav.pushReplacementNamed(HomeScreen.route);
     }
 
     ///if a user exists, redirect to home immediately
@@ -65,6 +69,33 @@ class AuthController with ChangeNotifier {
     }
   }
 
+  Future register(
+      {required String email,
+      required String password,
+      required String username}) async {
+    try {
+      working = true;
+      notifyListeners();
+      UserCredential createdUser = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      if (createdUser.user != null) {
+        ChatUser userModel = ChatUser(createdUser.user!.uid, username, email,
+            '', Timestamp.now(), Timestamp.now());
+        return FirebaseFirestore.instance
+            .collection('users')
+            .doc(userModel.uid)
+            .set(userModel.json);
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      print(e.code);
+      working = false;
+      currentUser = null;
+      error = e;
+      notifyListeners();
+    }
+  }
+
   Future logout() async {
     working = true;
     notifyListeners();
@@ -72,15 +103,5 @@ class AuthController with ChangeNotifier {
     working = false;
     notifyListeners();
     return;
-  }
-
-  Future<UserCredential?> register(
-      {required String email, required String password}) async {
-    try {
-      return await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-    } catch (e) {
-      rethrow;
-    }
   }
 }
