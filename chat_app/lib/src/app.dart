@@ -1,4 +1,4 @@
-import 'package:chat_app/src/screens/authentication/auth_screen.dart';
+import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
 import 'package:chat_app/src/service_locators.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       builder: (context, Widget? child) => child as Widget,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: NavigationService.generateRoute,
-      initialRoute: AuthScreen.route,
+      initialRoute: LoginScreen.route,
     );
   }
 }

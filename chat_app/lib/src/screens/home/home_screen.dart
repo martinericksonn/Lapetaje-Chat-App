@@ -52,8 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
   scrollToBottom() async {
     await Future.delayed(const Duration(milliseconds: 250));
     print('scrolling to bottom');
-    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-        curve: Curves.easeIn, duration: const Duration(milliseconds: 250));
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          curve: Curves.easeIn, duration: const Duration(milliseconds: 250));
+    }
   }
 
   @override
