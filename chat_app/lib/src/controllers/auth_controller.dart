@@ -1,10 +1,14 @@
 import 'dart:async';
 
-import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
+import 'package:chat_app/src/controllers/navigation/navigation_service.dart';
+import 'package:chat_app/src/models/chat_user_model.dart';
+import 'package:chat_app/src/screens/authentication/auth_screen.dart';
+import 'package:chat_app/src/screens/home/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../service_locators.dart';
+import '../service_locators.dart';
 
 import '../screens/home/home_screen.dart';
 import 'navigation/navigation_service.dart';
@@ -31,7 +35,7 @@ class AuthController with ChangeNotifier {
     if (event == null) {
       print('no logged in user');
       nav.popUntilFirst();
-      nav.pushReplacementNamed(LoginScreen.route);
+      nav.pushReplacementNamed(AuthScreen.route);
     }
 
     ///if a user exists, redirect to home immediately

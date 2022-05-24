@@ -1,15 +1,14 @@
-import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
+import 'package:chat_app/src/screens/authentication/auth_screen.dart';
+import 'package:chat_app/src/screens/home/home_screen.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/material.dart';
 import 'dart:developer' as developer;
-
-import '../../screens/home/home_screen.dart';
 part 'navigation_animations.dart';
 part 'navigation_routing.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  List<String> routeStack = [LoginScreen.route];
+  List<String> routeStack = [AuthScreen.route];
   String get currentRoute {
     String result = '';
     if (routeStack.isNotEmpty) {
@@ -119,7 +118,8 @@ class NavigationService {
   }
 
   Future<Object?> push(Route<Object> route) {
-    log('Pushing route [${route.settings.name}]', origin: 'NavigationService');
+    log('Pushing route [${route.settings.name}]',
+        origin: 'NavigationService');
 
     return navigatorKey.currentState!.push(route);
   }

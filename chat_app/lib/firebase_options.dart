@@ -69,7 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '844741810062',
     projectId: 'lapetaje-chat-app',
     storageBucket: 'lapetaje-chat-app.appspot.com',
-    iosClientId: '844741810062-o33eescoe1hf0mtdgn2ag8brnavlod6i.apps.googleusercontent.com',
+    iosClientId:
+        '844741810062-o33eescoe1hf0mtdgn2ag8brnavlod6i.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatApp',
   );
 }
