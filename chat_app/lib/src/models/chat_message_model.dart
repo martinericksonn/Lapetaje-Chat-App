@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatMessage {
   final String uid, sentBy, message;
   final Timestamp ts;
+  String? previousChatID;
 
   ChatMessage(
       {this.uid = '', required this.sentBy, this.message = '', Timestamp? ts})
@@ -28,6 +29,10 @@ class ChatMessage {
       print(e);
       return [];
     }
+  }
+
+  String get previousMessage {
+    return previousChatID!;
   }
 
   static Stream<List<ChatMessage>> currentChats() => FirebaseFirestore.instance

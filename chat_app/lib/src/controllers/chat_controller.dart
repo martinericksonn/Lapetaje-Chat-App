@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class ChatController with ChangeNotifier {
   late StreamSubscription _chatSub;
   List<ChatMessage> chats = [];
+  String? previousChatID;
 
   ChatController() {
     _chatSub = ChatMessage.currentChats().listen(chatUpdateHandler);
