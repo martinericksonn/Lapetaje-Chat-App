@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../controllers/auth_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   final AuthController auth;
@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         children: [
           Text(
             "Joined us before? ",
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           TextButton(
               onPressed: () {
@@ -127,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Text(
                 "Login",
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
               )),
@@ -170,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // padding:
         //     EdgeInsets.symmetric(horizontal: 30, vertical: 22),
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: Text(
@@ -195,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Text(
           "Forget password?",
           style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -207,7 +207,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       alignment: Alignment.topLeft,
       child: Text(
-        "Join Tasuku now.",
+        "Join Tabi now.",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -224,11 +224,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             border: Border.all(
               color: isPasswordEmpty
                   ? Colors.red
-                  : Theme.of(context).colorScheme.secondary, // set border
+                  : Theme.of(context).colorScheme.primary, // set border
 
               width: isPasswordEmpty ? 2.0 : 1.0,
             ), // set
-            // color: Theme.of(context).colorScheme.secondary,
+            // color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(20)),
         child: TextFormField(
           controller: _passCon,
@@ -251,7 +251,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hintStyle: TextStyle(
                 color: isPasswordEmpty
                     ? Colors.red
-                    : Theme.of(context).colorScheme.secondary),
+                    : Theme.of(context).colorScheme.primary),
             hintText: "Password",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -267,10 +267,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             border: Border.all(
               color: isUsernameEmpty
                   ? Colors.red
-                  : Theme.of(context).colorScheme.secondary,
+                  : Theme.of(context).colorScheme.primary,
               width: isUsernameEmpty ? 2.0 : 1.0,
             ), // set
-            // color: Theme.of(context).colorScheme.secondary,
+            // color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(20)),
         child: TextFormField(
           controller: _unCon,
@@ -290,7 +290,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hintStyle: TextStyle(
                 color: isUsernameEmpty
                     ? Colors.red
-                    : Theme.of(context).colorScheme.secondary),
+                    : Theme.of(context).colorScheme.primary),
             hintText: "Username",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -306,12 +306,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             border: Border.all(
               color: isEmailEmpty
                   ? Colors.red
-                  : Theme.of(context).colorScheme.secondary,
+                  : Theme.of(context).colorScheme.primary,
               // Colors.red,
 
               width: isEmailEmpty ? 2.0 : 1.0,
             ), // set
-            // color: Theme.of(context).colorScheme.secondary,
+            // color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(20)),
         child: TextFormField(
           controller: _emailCon,
@@ -331,7 +331,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             hintStyle: TextStyle(
                 color: isEmailEmpty
                     ? Colors.red
-                    : Theme.of(context).colorScheme.secondary),
+                    : Theme.of(context).colorScheme.primary),
             hintText: "Email",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -346,9 +346,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
           child: Text(
-            "Tasuku",
+            "Tabi",
             style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
                 fontSize: 20),
           ),
@@ -372,9 +372,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       title: Container(
         alignment: Alignment.centerRight,
         child: Text(
-          "Tasuku",
+          "Tabi",
           style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold),
         ),
       ),

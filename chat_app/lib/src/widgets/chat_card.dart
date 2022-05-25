@@ -2,6 +2,7 @@
 
 import 'package:chat_app/src/controllers/chat_controller.dart';
 import 'package:chat_app/src/models/chat_user_model.dart';
+import 'package:chat_app/src/widgets/bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -27,8 +28,6 @@ class ChatCard extends StatefulWidget {
 }
 
 class _ChatCardState extends State<ChatCard> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _textController = TextEditingController();
   var isVisible = false;
   List<ChatMessage> get chat => widget.chat;
   int get index => widget.index;
@@ -193,108 +192,10 @@ class _ChatCardState extends State<ChatCard> {
     return showMaterialModalBottomSheet(
       context: context,
       builder: (context) => SingleChildScrollView(
-        controller: ModalScrollController.of(context),
-        child: Container(
-            child: Material(
-                child: SafeArea(
-          top: false,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                title: Text('Edit'),
-                leading: Icon(Icons.edit),
-                onTap: () => {
-                  _textController.text = chat[index].message,
-                  Navigator.of(context).pop(),
-                  showMaterialModalBottomSheet(
-                    context: context,
-                    builder: (context) => SingleChildScrollView(
-                      controller: ModalScrollController.of(context),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            height: 200,
-                            child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  // ignore: prefer_const_literals_to_create_immutables
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 18.0),
-                                      child: Text("Edit",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(18.0),
-                                      child: TextFormField(
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        controller: _textController,
-                                        autofocus: true,
-
-                                        // style:
-                                        //     TextStyle(fontWeight: FontWeight.bold),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter some text';
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          chat[index].updateMessage(
-                                              _textController.text, true);
-
-                                          Navigator.of(context).pop();
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 30, vertical: 12),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Container(
-                                          child: Text(
-                                            "Save",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                },
-              ),
-              ListTile(
-                title: Text('Delete'),
-                leading: Icon(Icons.delete),
-                onTap: () =>
-                    {Navigator.of(context).pop(), chat[index].deleteMessage()},
-              )
-            ],
-          ),
-        ))),
-      ),
+          controller: ModalScrollController.of(context),
+          child: BottomSheetModal(
+            chat: chat[index],
+          )),
     );
   }
 }

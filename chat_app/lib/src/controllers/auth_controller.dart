@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:chat_app/src/controllers/navigation/navigation_service.dart';
 import 'package:chat_app/src/models/chat_user_model.dart';
-import 'package:chat_app/src/screens/authentication/login/login_screen.dart';
+import 'package:chat_app/src/screens/authentication/login_screen.dart';
 import 'package:chat_app/src/screens/home/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

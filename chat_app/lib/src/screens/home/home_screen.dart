@@ -4,6 +4,7 @@ import 'package:chat_app/src/controllers/auth_controller.dart';
 import 'package:chat_app/src/controllers/chat_controller.dart';
 import 'package:chat_app/src/models/chat_user_model.dart';
 import 'package:chat_app/src/widgets/chat_card.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
@@ -62,6 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Theme.of(context).bottomAppBarColor,
+      statusBarColor: Theme.of(context).primaryColor,
+      //color set to transperent or set your own color
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(

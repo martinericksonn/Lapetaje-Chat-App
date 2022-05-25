@@ -2,10 +2,10 @@
 import 'package:chat_app/src/controllers/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 
-import '../../../controllers/auth_controller.dart';
-import '../../../service_locators.dart';
-import '../../home/home_screen.dart';
-import '../register/register_screen.dart';
+import '../../controllers/auth_controller.dart';
+import '../../service_locators.dart';
+import '../home/home_screen.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String route = 'auth-screen';
@@ -127,8 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "New to Tasuku?",
-            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+            "New to Tabi?",
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           TextButton(
               onPressed: () {
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                 "Register",
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
               )),
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // padding:
         //     EdgeInsets.symmetric(horizontal: 30, vertical: 22),
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: Text(
@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           "Forget password?",
           style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -224,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
             border: Border.all(
               color: isPasswordEmpty
                   ? Colors.red
-                  : Theme.of(context).colorScheme.secondary,
+                  : Theme.of(context).colorScheme.primary,
               width: isPasswordEmpty ? 2.0 : 1.0,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintStyle: TextStyle(
                 color: isPasswordEmpty
                     ? Colors.red
-                    : Theme.of(context).colorScheme.secondary),
+                    : Theme.of(context).colorScheme.primary),
             hintText: "Password",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -267,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
             border: Border.all(
               color: isEmailEmpty
                   ? Colors.red
-                  : Theme.of(context).colorScheme.secondary,
+                  : Theme.of(context).colorScheme.primary,
               width: isEmailEmpty ? 2.0 : 1.0,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
@@ -291,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hintStyle: TextStyle(
                 color: isEmailEmpty
                     ? Colors.red
-                    : Theme.of(context).colorScheme.secondary),
+                    : Theme.of(context).colorScheme.primary),
             hintText: "Email",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -306,9 +306,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
           child: Text(
-            "Tasuku",
+            "Tabi",
             style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
                 fontSize: 20),
           ),
@@ -336,9 +336,9 @@ class _LoginScreenState extends State<LoginScreen> {
       title: Container(
         alignment: Alignment.centerRight,
         child: Text(
-          "Tasuku",
+          "Tabi",
           style: TextStyle(
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold),
         ),
       ),

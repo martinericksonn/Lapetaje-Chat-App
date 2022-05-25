@@ -4,9 +4,16 @@ class ChatMessage {
   final String uid, sentBy, message;
   final Timestamp ts;
   String? previousChatID;
+  bool isDeleted;
+  bool isEdited;
 
   ChatMessage(
-      {this.uid = '', required this.sentBy, this.message = '', Timestamp? ts})
+      {this.uid = '',
+      required this.sentBy,
+      this.message = '',
+      this.isDeleted = false,
+      this.isEdited = false,
+      ts})
       : ts = ts ?? Timestamp.now();
 
   static ChatMessage fromDocumentSnap(DocumentSnapshot snap) {
@@ -19,8 +26,13 @@ class ChatMessage {
     );
   }
 
-  Map<String, dynamic> get json =>
-      {'sentBy': sentBy, 'message': message, 'ts': ts};
+  Map<String, dynamic> get json => {
+        'sentBy': sentBy,
+        'message': message,
+        'isDeleted': isDeleted,
+        'isEdited': isEdited,
+        'ts': ts
+      };
 
   static List<ChatMessage> fromQuerySnap(QuerySnapshot snap) {
     try {
@@ -51,13 +63,13 @@ class ChatMessage {
       .snapshots()
       .map(ChatMessage.fromQuerySnap);
 
-  Future updateMessage(String newMessage, bool edited) {
-    newMessage = edited ? newMessage + " (edited)" : newMessage;
+  Future updateMessage(String newMessage) {
     return FirebaseFirestore.instance.collection("chats").doc(uid) //edite  d
-        .update({'message': newMessage});
+        .update({'message': newMessage, 'isEdited': true});
   }
 
   Future deleteMessage() {
-    return updateMessage("message deleted", false);
+    return FirebaseFirestore.instance.collection("chats").doc(uid) //edite  d
+        .update({'message': 'message deleted', 'isDeleted': true});
   }
 }
