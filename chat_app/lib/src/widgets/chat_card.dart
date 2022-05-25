@@ -13,13 +13,13 @@ class ChatCard extends StatefulWidget {
   const ChatCard({
     Key? key,
     required this.index,
+    // required this.chat,
     required this.chat,
-    required this.chatController,
   }) : super(key: key);
 
   final int index;
-  final ChatMessage chat;
-  final ChatController chatController;
+  final List<ChatMessage> chat;
+  // final ChatController chat;
 
   @override
   State<ChatCard> createState() => _ChatCardState();
@@ -27,7 +27,7 @@ class ChatCard extends StatefulWidget {
 
 class _ChatCardState extends State<ChatCard> {
   var isVisible = false;
-  ChatMessage get chat => widget.chat;
+  List<ChatMessage> get chat => widget.chat;
   int get index => widget.index;
 
   // @override
@@ -44,7 +44,7 @@ class _ChatCardState extends State<ChatCard> {
 
         // width: 300,
 
-        alignment: widget.chat.sentBy == FirebaseAuth.instance.currentUser?.uid
+        alignment: chat[index].uid == FirebaseAuth.instance.currentUser?.uid
             ? Alignment.bottomRight
             : Alignment.centerLeft,
         // color: Colors.red,
@@ -52,46 +52,51 @@ class _ChatCardState extends State<ChatCard> {
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Column(
             children: [
-              // Visibility(
-              //   visible: isVisible,
-              //   child: Container(
-              //     color: Colors.red,
-              //     alignment: Alignment.center,
-              //     width: double.infinity,
-              //     // color: Colors.green,
-              //     child: Text('date'),
-              //   ),
-              // ),
+              Visibility(
+                visible: isVisible,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  // color: Colors.green,
+                  child: Text(
+                    DateFormat("MMM d y hh:mm aaa")
+                        .format(chat[index].ts.toDate()),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ),
+              ),
               Container(
                 // color: Colors.pink,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 alignment:
-                    widget.chat.sentBy == FirebaseAuth.instance.currentUser?.uid
+                    chat[index].sentBy == FirebaseAuth.instance.currentUser?.uid
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                 child: GestureDetector(
                   onTap: () {
-                    // setState(() {
-                    //   isVisible = !isVisible;
-                    // });
+                    setState(() {
+                      isVisible = !isVisible;
+                    });
                   },
                   child: Container(
                     // color: Colors.amber,
                     child: Column(
                       // mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(index.toString()),
+                        // Text(index.toString()),
                         Column(
-                          crossAxisAlignment: widget.chat.sentBy ==
+                          crossAxisAlignment: chat[index].sentBy ==
                                   FirebaseAuth.instance.currentUser?.uid
                               ? CrossAxisAlignment.end
                               : CrossAxisAlignment.start,
                           children: [
-                            if (widget.chat.sentBy !=
-                                    FirebaseAuth.instance.currentUser?.uid &&
-                                widget.chatController.previousChatID !=
-                                    widget.chat.sentBy)
+                            if ((chat[index].sentBy !=
+                                    FirebaseAuth.instance.currentUser?.uid) &&
+                                (index == 0 ||
+                                    chat[index - 1].sentBy !=
+                                        chat[index].sentBy))
                               // Container(
                               //   // color: Colors.pink,
                               //   padding: EdgeInsets.only(left: 10, top: 5),
@@ -103,28 +108,17 @@ class _ChatCardState extends State<ChatCard> {
                               // ),
                               FutureBuilder<ChatUser>(
                                   future:
-                                      ChatUser.fromUid(uid: widget.chat.sentBy),
+                                      ChatUser.fromUid(uid: chat[index].sentBy),
                                   builder:
                                       (context, AsyncSnapshot<ChatUser> snap) {
                                     return Container(
                                         padding:
                                             EdgeInsets.only(left: 10, top: 5),
-                                        child: RichText(
-                                          text: TextSpan(
-                                              text: '${snap.data?.username}  ',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall,
-                                              children: [
-                                                TextSpan(
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                    text: DateFormat(
-                                                            "MMM d y hh:mm aaa")
-                                                        .format(
-                                                            chat.ts.toDate())),
-                                              ]),
+                                        child: Text(
+                                          '${snap.data?.username}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
                                         )
                                         // Text(
                                         //
@@ -133,15 +127,15 @@ class _ChatCardState extends State<ChatCard> {
                                         );
                                   }),
 
-                            FutureBuilder<ChatUser>(
-                                future:
-                                    ChatUser.fromUid(uid: widget.chat.sentBy),
-                                builder:
-                                    (context, AsyncSnapshot<ChatUser> snap) {
-                                  widget.chatController.previousChatID =
-                                      widget.chat.sentBy;
-                                  return SizedBox();
-                                }),
+                            // FutureBuilder<ChatUser>(
+                            //     future:
+                            //         ChatUser.fromUid(uid: widget.chat.sentBy),
+                            //     builder:
+                            //         (context, AsyncSnapshot<ChatUser> snap) {
+                            //       widget.chatController.previousChatID =
+                            //           chat[index].sentBy;
+                            //       return SizedBox();
+                            //     }),
 
                             Container(
                               constraints: const BoxConstraints(maxWidth: 320),
@@ -149,11 +143,14 @@ class _ChatCardState extends State<ChatCard> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
-                                color: Theme.of(context).primaryColor,
+                                color: chat[index].sentBy ==
+                                        FirebaseAuth.instance.currentUser?.uid
+                                    ? Theme.of(context).primaryColorDark
+                                    : Theme.of(context).primaryColor,
                               ),
                               // color: Colors.black,
                               child: Text(
-                                widget.chat.message,
+                                chat[index].message,
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Theme.of(context)

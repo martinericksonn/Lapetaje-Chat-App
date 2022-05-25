@@ -99,8 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemBuilder: (context, index) {
                                   return ChatCard(
                                       index: index,
-                                      chat: _chatController.chats[index],
-                                      chatController: _chatController);
+                                      chat: _chatController.chats);
                                 }),
                             // for (ChatMessage chat in _chatController.chats)
                             //   ChatCard(
