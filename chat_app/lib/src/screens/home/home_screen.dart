@@ -4,10 +4,10 @@ import 'package:chat_app/src/controllers/auth_controller.dart';
 import 'package:chat_app/src/controllers/chat_controller.dart';
 import 'package:chat_app/src/models/chat_user_model.dart';
 import 'package:chat_app/src/widgets/chat_card.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../models/chat_message_model.dart';
 import '../../models/chat_user_model.dart';
 
 import '../../service_locators.dart';

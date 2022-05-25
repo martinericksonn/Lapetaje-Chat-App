@@ -35,9 +35,29 @@ class ChatMessage {
     return previousChatID!;
   }
 
+  // bool hasNotSeenMessage(String uid) {
+  //   return !seenBy.contains(uid);
+  // }
+
+  Future updateSeen(String userID) {
+    return FirebaseFirestore.instance.collection("chats").doc(uid).update({
+      'seenBy': FieldValue.arrayUnion([userID])
+    });
+  }
+
   static Stream<List<ChatMessage>> currentChats() => FirebaseFirestore.instance
       .collection('chats')
       .orderBy('ts')
       .snapshots()
       .map(ChatMessage.fromQuerySnap);
+
+  Future updateMessage(String newMessage, bool edited) {
+    newMessage = edited ? newMessage + " (edited)" : newMessage;
+    return FirebaseFirestore.instance.collection("chats").doc(uid) //edite  d
+        .update({'message': newMessage});
+  }
+
+  Future deleteMessage() {
+    return updateMessage("message deleted", false);
+  }
 }

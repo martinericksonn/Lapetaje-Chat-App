@@ -21,6 +21,9 @@ class ChatController with ChangeNotifier {
   }
 
   chatUpdateHandler(List<ChatMessage> update) {
+    // for(ChatMessage message in update){
+
+    // }
     chats = update;
     notifyListeners();
   }
