@@ -85,14 +85,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   animation: _chatController,
                   builder: (context, Widget? w) {
                     return SingleChildScrollView(
+                      physics: ScrollPhysics(),
                       controller: _scrollController,
                       child: SizedBox(
                         width: double.infinity,
                         child: Column(
                           children: [
-                            for (ChatMessage chat in _chatController.chats)
-                              ChatCard(
-                                  chat: chat, chatController: _chatController)
+                            ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: _chatController.chats.length,
+                                itemBuilder: (context, index) {
+                                  return ChatCard(
+                                      index: index,
+                                      chat: _chatController.chats[index],
+                                      chatController: _chatController);
+                                }),
+                            // for (ChatMessage chat in _chatController.chats)
+                            //   ChatCard(
+                            //       chat: chat, chatController: _chatController)
                           ],
                         ),
                       ),
