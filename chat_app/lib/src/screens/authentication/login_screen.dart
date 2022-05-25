@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'package:chat_app/src/controllers/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../service_locators.dart';
@@ -48,6 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Theme.of(context).bottomAppBarColor,
+      statusBarColor: Theme.of(context).primaryColor,
+      //color set to transperent or set your own color
+    ));
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false, // this is new

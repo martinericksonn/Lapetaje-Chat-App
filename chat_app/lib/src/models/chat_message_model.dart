@@ -22,6 +22,8 @@ class ChatMessage {
       uid: snap.id,
       sentBy: json['sentBy'] ?? '',
       message: json['message'] ?? '',
+      isDeleted: json['isDeleted'] ?? false,
+      isEdited: json['isEdited'] ?? false,
       ts: json['ts'] ?? Timestamp.now(),
     );
   }

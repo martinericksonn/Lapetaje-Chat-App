@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }),
             ),
             Container(
-              height: MediaQuery.of(context).size.height / 16,
+              height: MediaQuery.of(context).size.height / 15,
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
@@ -128,8 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       focusNode: _messageFN,
                       controller: _messageController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                        ),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColorDark,
+                          ),
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
                           ),
@@ -138,9 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.redAccent,
+                    icon: Icon(
+                      Icons.send_rounded,
+                      color: Theme.of(context).primaryColorDark,
                     ),
                     onPressed: send,
                   )
