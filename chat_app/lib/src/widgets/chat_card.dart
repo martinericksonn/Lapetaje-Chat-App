@@ -161,7 +161,11 @@ class _ChatCardState extends State<ChatCard> {
             ],
           ),
           Visibility(
-            visible: isVisible,
+            visible: chat[index].seenBy.length > 1
+                ? index == chat.length - 1
+                    ? true
+                    : isVisible
+                : false,
             child: Container(
               // color: Colors.pink,
               padding: EdgeInsets.only(bottom: 2, top: 2),

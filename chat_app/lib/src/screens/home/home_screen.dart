@@ -71,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        // backgroundColor: Theme.of(context).colorScheme.,
         elevation: 0,
         title: Text('Chatting from ${user?.username ?? '...'}'),
         actions: [
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 _auth.logout();
               },
-              icon: const Icon(Icons.logout))
+              icon: const Icon(Icons.logout_rounded))
         ],
       ),
       body: SizedBox(
@@ -129,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       focusNode: _messageFN,
                       controller: _messageController,
                       decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(12),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           borderSide: BorderSide(
