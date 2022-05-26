@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:chat_app/src/controllers/chat_controller.dart';
 import 'package:chat_app/src/models/chat_user_model.dart';
 import 'package:chat_app/src/widgets/bottom_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,14 +30,6 @@ class _ChatCardState extends State<ChatCard> {
   List<ChatMessage> get chat => widget.chat;
   int get index => widget.index;
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Visibility(
-  //     child: Container(
-  //       child: Text(chat.message),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,6 +39,7 @@ class _ChatCardState extends State<ChatCard> {
           Visibility(
             visible: isVisible,
             child: Container(
+              // color: Colors.red,
               padding: EdgeInsets.only(bottom: 5, top: 15),
               alignment: Alignment.center,
               width: double.infinity,
@@ -121,7 +112,7 @@ class _ChatCardState extends State<ChatCard> {
                             }),
                       Container(
                         constraints: const BoxConstraints(maxWidth: 320),
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: chat[index].isDeleted
@@ -139,8 +130,13 @@ class _ChatCardState extends State<ChatCard> {
                         child: Text(
                           chat[index].message,
                           style: TextStyle(
-                              fontSize: 18,
-                              color: Theme.of(context).colorScheme.onPrimary),
+                              fontSize: 17,
+                              color: chat[index].isDeleted
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.color
+                                  : Theme.of(context).colorScheme.onPrimary),
                         ),
                       ),
                     ],
@@ -163,6 +159,58 @@ class _ChatCardState extends State<ChatCard> {
                 ),
               ),
             ],
+          ),
+          Visibility(
+            visible: isVisible,
+            child: Container(
+              // color: Colors.pink,
+              padding: EdgeInsets.only(bottom: 2, top: 2),
+              alignment: Alignment.center,
+              width: double.infinity,
+              // color: Colors.green,
+
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 5.0, right: 10, left: 10),
+                child: Row(
+                  mainAxisAlignment: chat[index].sentBy ==
+                          FirebaseAuth.instance.currentUser?.uid
+                      ? MainAxisAlignment.end
+                      : MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Seen by ",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+
+                    for (String uid in chat[index].seenBy)
+                      FutureBuilder(
+                          future: ChatUser.fromUid(uid: uid),
+                          builder: (context, AsyncSnapshot snap) {
+                            if (snap.hasData) {
+                              if (chat[index].seenBy.last == uid) {
+                                return Text(
+                                  'and ${snap.data?.username}',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                );
+                              } else {
+                                return Text(
+                                  '${snap.data?.username}${chat[index].seenBy.length > 2 ? chat[index].seenBy[chat[index].seenBy.length - 2] == uid ? '' : ',' : ''} ',
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                );
+                              }
+                            }
+                            return Text('');
+                          }),
+                    // Text(
+                    //   DateFormat("MMM d, y hh:mm aaa")
+                    //       .format(chat[index].ts.toDate()),
+                    //   style: Theme.of(context).textTheme.bodySmall,
+                    // ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),
