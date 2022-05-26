@@ -143,35 +143,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: _emailCon.text.trim(),
           password: _passCon.text.trim());
     } catch (error) {
-      prompts = error.toString();
+      setState(() {
+        prompts = error.toString();
+      });
     }
   }
 
-  TextButton registerButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        // print(_unCon.text);
-        // print(_emailCon.text);
-        // print(_passCon.text);
-        // print(_formKey.currentState!.validate() && isFieldEmpty());
-        if (_formKey.currentState!.validate() && isFieldEmpty()) {
-          setState(() {
-            register();
-          });
-        } else {
-          setState(() {
-            prompts = "Fields cannot be empty";
-          });
-        }
-      },
-      child: Container(
-        width: double.infinity,
-        height: 60,
-        // padding:
-        //     EdgeInsets.symmetric(horizontal: 30, vertical: 22),
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(50)),
+  Widget registerButton(BuildContext context) {
+    return Container(
+      // color: Colors.red,
+      width: 320,
+      height: 68,
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(50)),
+      child: TextButton(
+        onPressed: () {
+          if (_formKey.currentState!.validate() && isFieldEmpty()) {
+            setState(() {
+              register();
+            });
+          } else {
+            setState(() {
+              prompts = "Fields cannot be empty";
+            });
+          }
+        },
         child: Center(
           child: Text(
             "Register",

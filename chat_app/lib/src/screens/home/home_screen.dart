@@ -61,6 +61,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  scrollBottom() async {
+    await Future.delayed(const Duration(milliseconds: 250));
+    print('scrolling to bottom');
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+          _scrollController.position.viewportDimension +
+              _scrollController.position.maxScrollExtent,
+          curve: Curves.easeIn,
+          duration: const Duration(milliseconds: 250));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -105,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: _chatController.chats.length,
                                 itemBuilder: (context, index) {
                                   return ChatCard(
+                                      scrollController: _scrollController,
                                       index: index,
                                       chat: _chatController.chats);
                                 }),

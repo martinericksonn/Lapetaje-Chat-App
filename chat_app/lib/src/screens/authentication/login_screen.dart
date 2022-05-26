@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Form(
               key: _formKey,
               onChanged: () => setState(() {
-                prompts = "";
+                clearPrompt();
               }),
               child: Column(children: [
                 upperBody(context),
@@ -156,29 +156,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  TextButton loginButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        if (_formKey.currentState!.validate()) {
-          // bool result =
-          _auth.login(_emailCon.text.trim(), _passCon.text.trim());
-          // if (!result) {
-          //   setState(() {
-          //     prompts = isEmailEmpty || isPasswordEmpty
-          //         ? "Fields cannot be empty"
-          //         : 'Email or password may be incorrect or the user has not been registered yet.';
-          //   });
-          // }
-        }
-      },
-      child: Container(
-        width: double.infinity,
-        height: 60,
-        // padding:
-        //     EdgeInsets.symmetric(horizontal: 30, vertical: 22),
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(50)),
+  Widget loginButton(BuildContext context) {
+    return Container(
+      width: 320,
+      height: 68,
+      decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(50)),
+      child: TextButton(
+        onPressed: () async {
+          try {
+            if (_formKey.currentState!.validate()) {
+              await _auth.login(_emailCon.text.trim(), _passCon.text.trim());
+            }
+            print(' ssssssssssssssssssssssssd');
+          } catch (error) {
+            print(' sssssssssssssssssssssss ${error}');
+            setState(() {
+              prompts = error.toString();
+            });
+          }
+        },
         child: Center(
           child: Text(
             "Login",

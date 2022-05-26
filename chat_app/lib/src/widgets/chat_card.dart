@@ -13,10 +13,11 @@ class ChatCard extends StatefulWidget {
   const ChatCard({
     Key? key,
     required this.index,
+    required this.scrollController,
     // required this.chat,
     required this.chat,
   }) : super(key: key);
-
+  final ScrollController scrollController;
   final int index;
   final List<ChatMessage> chat;
   // final ChatController chat;
@@ -29,6 +30,18 @@ class _ChatCardState extends State<ChatCard> {
   var isVisible = false;
   List<ChatMessage> get chat => widget.chat;
   int get index => widget.index;
+  ScrollController get scrollController => widget.scrollController;
+
+  // scrollBottom(int offset) async {
+  //   await Future.delayed(const Duration(milliseconds: 100));
+
+  //   if (scrollController.hasClients) {
+  //     scrollController.animateTo((scrollController.position.pixels) + offset,
+  //         // scrollController.position.maxScrollExtent,
+  //         curve: Curves.easeOut,
+  //         duration: const Duration(milliseconds: 100));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +49,11 @@ class _ChatCardState extends State<ChatCard> {
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Column(
         children: [
+          Visibility(
+              visible: index == 0,
+              child: SizedBox(
+                height: 10,
+              )),
           Visibility(
             visible: isVisible,
             child: Container(
@@ -76,7 +94,9 @@ class _ChatCardState extends State<ChatCard> {
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: GestureDetector(
                   onTap: () {
+                    // int num = 60;
                     setState(() {
+                      // scrollBottom(isVisible ? -num : num);
                       isVisible = !isVisible;
                     });
                   },
@@ -161,11 +181,7 @@ class _ChatCardState extends State<ChatCard> {
             ],
           ),
           Visibility(
-            visible: chat[index].seenBy.length > 1
-                ? index == chat.length - 1
-                    ? true
-                    : isVisible
-                : false,
+            visible: isVisible,
             child: Container(
               // color: Colors.pink,
               padding: EdgeInsets.only(bottom: 2, top: 2),
@@ -183,7 +199,7 @@ class _ChatCardState extends State<ChatCard> {
                       : MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Seen by ",
+                      chat[index].seenBy.length > 1 ? "Seen by " : "Sent",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
 
@@ -191,7 +207,7 @@ class _ChatCardState extends State<ChatCard> {
                       FutureBuilder(
                           future: ChatUser.fromUid(uid: uid),
                           builder: (context, AsyncSnapshot snap) {
-                            if (snap.hasData) {
+                            if (snap.hasData && chat[index].seenBy.length > 1) {
                               if (chat[index].seenBy.last == uid) {
                                 return Text(
                                   'and ${snap.data?.username}',

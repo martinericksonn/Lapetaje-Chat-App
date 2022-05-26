@@ -60,12 +60,13 @@ class AuthController with ChangeNotifier {
       ///there is no 'working=false' here as the handleAuthUserChanges does that for us
       return result;
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      print(e.code);
+      print('gggggggggggggggggggggggggggggggggggg ${e.message}');
+      // print(e.code);
       working = false;
       currentUser = null;
       error = e;
       notifyListeners();
+      return Future.error(e.message.toString());
     }
   }
 
@@ -87,12 +88,13 @@ class AuthController with ChangeNotifier {
             .set(userModel.json);
       }
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      print("adsfadsf ${e.message}");
       print(e.code);
       working = false;
       currentUser = null;
       error = e;
       notifyListeners();
+      return Future.error(e.message.toString());
     }
   }
 
